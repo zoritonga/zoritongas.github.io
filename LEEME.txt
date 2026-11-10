@@ -1,0 +1,13 @@
+ZORIWI SHOP - tienda + panel conectados en vivo
+
+public/index.html   -> la tienda (lee el catalogo desde /api/products)
+public/admin.html   -> el panel (abre en tusitio.netlify.app/admin)
+netlify/functions/products.mjs -> guarda el catalogo (Netlify Blobs)
+
+PASOS
+1. Sube esta carpeta COMPLETA a Netlify desde GitHub o con Netlify CLI (netlify deploy --prod).
+   (Arrastrar solo public/ NO activa la funcion.)
+2. En Netlify: Site configuration > Environment variables > agrega
+      ADMIN_KEY = la contrasena que quieras para el panel
+   y vuelve a desplegar.
+3. Entra a /admin, escribe la contrasena y edita. La tienda se actualiza sola cada ~15 s.

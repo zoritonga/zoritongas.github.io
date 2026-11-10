@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#10151d">
+<title>Panel · Zoriwi Shop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#10151d;--panel:#1b2838;--panel2:#223449;--edge:#2f4a66;--sky:#66c0f4;--steel:#c7d5e0;--mute:#8ba3ba;--ok:#5ec26a;--warn:#f2b84b;--bad:#ff8b92;--disp:'Bebas Neue','Arial Narrow',Impact,sans-serif;--body:'Outfit',system-ui,'Segoe UI',sans-serif;color-scheme:dark}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--steel);font:400 .95rem/1.5 var(--body);min-height:100vh;padding-bottom:90px}
+h1,h2{font-family:var(--disp);font-weight:400;color:#fff;line-height:1}
+button,input{font:inherit;color:inherit}button{cursor:pointer}
+:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
+.hidden{display:none!important}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border-radius:8px;border:1px solid var(--edge);background:var(--panel2);font-weight:600;font-size:.88rem;white-space:nowrap;transition:filter .2s,border-color .2s}
+.btn:hover{border-color:var(--sky)}
+.btn-primary{background:linear-gradient(90deg,#06bfff,#2d73ff);border-color:transparent;color:#fff}
+.btn-primary:hover{filter:brightness(1.15)}
+.btn-danger{color:var(--bad)}
+.btn-sm{padding:6px 12px;font-size:.78rem}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+#lock{position:fixed;inset:0;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 50% 15%,#1a44c2 -40%,#10151d 65%);z-index:50}
+.lock-box{width:min(380px,100%);background:var(--panel);border:1px solid var(--edge);border-radius:14px;padding:30px 26px;text-align:center;display:grid;gap:14px}
+.lock-box h1{font-size:2.6rem}
+.lock-box p{color:var(--mute);font-size:.85rem}
+.lock-box input{width:100%;text-align:center;letter-spacing:.15em;font-size:1.1rem;padding:12px;border-radius:8px;border:1px solid var(--edge);background:var(--bg)}
+.err{color:var(--bad);min-height:1.2em;font-size:.82rem}
+header{position:sticky;top:0;z-index:20;background:rgba(23,26,33,.92);backdrop-filter:blur(12px);border-bottom:1px solid #0b0f15;padding:10px 20px;padding-top:calc(10px + env(safe-area-inset-top,0px))}
+.bar{max-width:1120px;margin:auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font:400 1.7rem var(--disp);color:#fff}
+.brand svg{width:30px;height:30px}
+.brand small{display:block;font:500 .72rem var(--body);color:var(--mute);margin-top:-4px}
+.spacer{flex:1}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+main{max-width:1120px;margin:auto;padding:22px 20px}
+.status{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.stat{flex:1 1 130px;background:var(--panel);border:1px solid var(--edge);border-radius:10px;padding:12px 18px}
+.stat b{display:block;font:400 2.2rem var(--disp);color:#fff}
+.stat span{color:var(--mute);font-size:.8rem}
+.pub{flex:2 1 280px;display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--edge);border-radius:10px;padding:12px 18px}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--ok);flex:none}
+.pub.dirty .dot{background:var(--warn);box-shadow:0 0 0 6px rgba(242,184,75,.15)}
+.pub p{font-size:.84rem;color:var(--mute)}
+.pub strong{display:block;color:#fff;font-size:.92rem}
+.tools{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:6px 0 16px}
+.tools h2{font-size:2.2rem}
+#list{display:grid;grid-template-columns:repeat(auto-fill,minmax(480px,1fr));gap:16px}
+.pc{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--edge);border-radius:12px;padding:16px;display:grid;grid-template-columns:180px 1fr;gap:16px}
+.pc.off{border-color:rgba(255,139,146,.5)}
+.pc.off .ph img{filter:grayscale(1);opacity:.5}
+.photo{display:grid;gap:8px;align-content:start}
+.ph{position:relative;aspect-ratio:16/10;border-radius:8px;background:#0f141b;display:grid;place-items:center;overflow:hidden;border:1px dashed var(--edge);cursor:pointer}
+.ph:hover{border-color:var(--sky)}
+.ph img{width:100%;height:100%;object-fit:cover}
+.ph span{color:var(--mute);font-size:.8rem;text-align:center;padding:10px}
+.ph input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.fields{display:grid;gap:10px;align-content:start;min-width:0}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label.f{display:grid;gap:4px;font-size:.74rem;color:var(--mute);font-weight:600}
+label.f input{width:100%;padding:9px 12px;border-radius:8px;border:1px solid var(--edge);background:var(--bg);font-size:.92rem;font-weight:500;color:#fff}
+label.f input:focus{border-color:var(--sky);outline:none}
+.pc-foot{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sw{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:.88rem;cursor:pointer;user-select:none}
+.sw input{position:absolute;opacity:0}
+.sw i{width:46px;height:26px;border-radius:999px;background:#3a4a5c;position:relative;transition:background .2s;flex:none}
+.sw i::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .2s}
+.sw input:checked+i{background:var(--ok)}
+.sw input:checked+i::after{transform:translateX(20px)}
+.sw input:focus-visible+i{outline:2px solid var(--sky);outline-offset:2px}
+.icon{width:34px;height:34px;padding:0;border-radius:8px}
+.empty{grid-column:1/-1;text-align:center;padding:50px 20px;color:var(--mute);border:1px dashed var(--edge);border-radius:12px}
+#toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,30px);opacity:0;background:#fff;color:#0b1220;padding:10px 20px;border-radius:8px;font-weight:600;font-size:.86rem;transition:.3s;z-index:60;pointer-events:none;max-width:90vw;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+#toast.bad{background:#c0392b;color:#fff}
+details{margin-top:26px;background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:16px 20px}
+summary{cursor:pointer;font-weight:600;color:#fff}
+details ol{margin:12px 0 0 20px;color:var(--mute);display:grid;gap:6px}
+details b{color:var(--steel)}
+@media(max-width:560px){#list{grid-template-columns:1fr}.pc{grid-template-columns:1fr}.actions .btn{flex:1}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div id="lock" role="dialog" aria-modal="true" aria-labelledby="lockTitle">
+  <div class="lock-box">
+    <h1 id="lockTitle">Panel Zoriwi Shop</h1>
+    <p>Acceso restringido. Escribe tu contraseña para administrar los juegos.</p>
+    <input id="pin" type="password" autocomplete="current-password" aria-label="Contraseña" placeholder="Contraseña">
+    <div class="err" id="lockErr" role="alert"></div>
+    <button class="btn btn-primary" type="button" id="lockBtn">Entrar</button>
+  </div>
+</div>
+
+<div id="panel" class="hidden">
+<header>
+  <div class="bar">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="14" stroke="#66c0f4" stroke-width="2.5"/><circle cx="21" cy="12" r="4" fill="#66c0f4"/><circle cx="10" cy="21" r="3" stroke="#66c0f4" stroke-width="2"/><path d="M12.5 19.5 19 14" stroke="#66c0f4" stroke-width="2"/></svg>
+      <div>Zoriwi Shop<small>Panel de administración</small></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="actions">
+      <button class="btn" id="btnPreview" type="button">Ver tienda</button>
+      <button class="btn" id="btnExport" type="button">Descargar respaldo</button>
+      <button class="btn btn-sm" id="btnOut" type="button">Salir</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="status" aria-label="Resumen">
+    <div class="stat"><b id="sTotal">0</b><span>Paquetes</span></div>
+    <div class="stat"><b id="sOn">0</b><span>Disponibles</span></div>
+    <div class="stat"><b id="sOff">0</b><span>Agotados</span></div>
+    <div class="pub" id="pub"><span class="dot"></span><p><strong id="pubT">Todo publicado</strong><span id="pubS">Tus clientes ven este catálogo en vivo.</span></p></div>
+  </section>
+
+  <div class="tools">
+    <h2>Paquetes y juegos</h2>
+    <div class="actions">
+      <button class="btn" id="btnImport" type="button">Importar respaldo</button>
+      <button class="btn" id="btnReset" type="button">Restaurar originales</button>
+      <button class="btn btn-primary" id="btnAdd" type="button">+ Agregar paquete</button>
+      <input type="file" id="fileImport" accept="application/json,.json" class="hidden">
+    </div>
+  </div>
+
+  <div id="list"></div>
+
+  <details>
+    <summary>¿Cómo funciona?</summary>
+    <ol>
+      <li>Edita nombre, cantidad de juegos, precio, foto o disponibilidad: los cambios se <b>publican solos</b> en un par de segundos.</li>
+      <li>La tienda se actualiza <b>sin recargar</b> (cada ~15 segundos) en todos los teléfonos y computadoras.</li>
+      <li>Para cambiar una foto, toca la imagen del paquete y elige otra. Se ajusta sola al formato de la tienda.</li>
+      <li>Revisa arriba que diga <b>“Todo publicado”</b>. Si falla el internet, reintenta solo.</li>
+      <li>El precio en <b>0</b> no se muestra en la tienda. “Agotado” deja el paquete visible pero sin botón de compra.</li>
+    </ol>
+  </details>
+</main>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const API = "/api/products", SK = "zw_admin_key";
+const NOTA = "Tú eliges cualquier juego del catálogo de Steam.";
+const DEFAULTS = [1, 4, 7, 14].map(n => ({ id: "p" + n, nombre: `${n} JUEGO${n > 1 ? "S" : ""} (DE TODO STEAM)`, juegos: n, nota: NOTA, precio: 0, imagen: "", disponible: true }));
+const $ = (s, c = document) => c.querySelector(s);
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const ss = { get: k => { try { return sessionStorage.getItem(k); } catch (_) { return null; } }, set: (k, v) => { try { sessionStorage.setItem(k, v); } catch (_) {} }, del: k => { try { sessionStorage.removeItem(k); } catch (_) {} } };
+
+/* ---------- acceso ---------- */
+let KEY = "", BASE = "0", products = [];
+const lock = $("#lock"), panelEl = $("#panel");
+let fails = 0, blockedUntil = 0;
+function showLock() { KEY = ""; ss.del(SK); panelEl.classList.add("hidden"); lock.classList.remove("hidden"); $("#pin").value = ""; $("#lockErr").textContent = ""; setTimeout(() => { try { $("#pin").focus(); } catch (_) {} }, 30); }
+function openPanel() { lock.classList.add("hidden"); panelEl.classList.remove("hidden"); render(); }
+async function tryLogin(v, silent) {
+  const err = $("#lockErr");
+  try {
+    const wait = Math.ceil((blockedUntil - Date.now()) / 1000);
+    if (wait > 0) { err.textContent = "Demasiados intentos. Espera " + wait + " s."; return; }
+    let r;
+    try { r = await fetch(API + "?auth=1", { headers: { "x-admin-key": v }, cache: "no-store" }); }
+    catch (_) { if (!silent) err.textContent = "Sin conexión con el servidor. Abre este panel desde tu sitio en Netlify."; return; }
+    if (r.status === 404) { if (!silent) err.textContent = "No se encontró /api/products. Revisa que la función esté desplegada."; return; }
+    if (r.ok) { fails = 0; KEY = v; try { await loadRemote(); } catch (_) { err.textContent = "Entró, pero no se pudo cargar el catálogo. Recarga la página."; return; } ss.set(SK, v); openPanel(); return; }
+    if (r.status >= 500) { const d = await r.json().catch(() => ({})); err.textContent = d.error || "Error del servidor. Intenta de nuevo."; return; }
+    if (silent) { ss.del(SK); return; }
+    fails++; $("#pin").value = "";
+    if (fails >= 5) { blockedUntil = Date.now() + 30000; fails = 0; err.textContent = "Demasiados intentos. Espera 30 s."; }
+    else err.textContent = "Contraseña incorrecta.";
+    $("#pin").focus();
+  } catch (ex) { err.textContent = "No se pudo continuar: " + (ex && ex.message ? ex.message : ex); }
+}
+$("#lockBtn").addEventListener("click", () => tryLogin($("#pin").value));
+$("#pin").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); tryLogin($("#pin").value); } });
+$("#btnOut").addEventListener("click", showLock);
+
+/* ---------- datos ---------- */
+const slug = t => String(t || "paquete").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 30) || "paquete";
+function uid(name) { let id; do { id = slug(name) + "-" + Math.random().toString(36).slice(2, 6); } while (products.some(p => p.id === id)); return id; }
+const norm = p => ({ id: String(p.id || uid(p.nombre)), nombre: String(p.nombre || ""), juegos: Math.max(0, Math.round(Number(p.juegos) || 0)), nota: String(p.nota || ""), precio: Math.max(0, Number(p.precio) || 0), imagen: String(p.imagen || ""), disponible: p.disponible !== false });
+async function loadRemote() {
+  const r = await fetch(API, { cache: "no-store" }); if (!r.ok) throw new Error("http " + r.status);
+  const d = await r.json(); BASE = d.updated || "0";
+  products = Array.isArray(d.products) ? d.products.map(norm) : DEFAULTS.map(norm);
+}
+const clean = () => products.map(norm);
+let toastT = 0;
+function toast(t, bad) { const el = $("#toast"); el.textContent = t; el.classList.toggle("bad", !!bad); el.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove("show"), 2600); }
+
+/* ---------- publicar en vivo ---------- */
+let saveT = 0, pushing = false, again = false;
+function setPub(state, msg) {
+  $("#pub").classList.toggle("dirty", state !== "ok");
+  const T = { ok: ["Todo publicado", "Tus clientes ven este catálogo en vivo (se actualiza solo en unos segundos)."], saving: ["Publicando…", "Enviando tus cambios a la tienda."], error: ["No se pudo publicar", msg || "Revisa tu conexión. Reintentando…"], conflict: ["Hubo cambios desde otro dispositivo", "Recarga esta página para ver la versión más reciente antes de seguir editando."] }[state];
+  $("#pubT").textContent = T[0]; $("#pubS").textContent = T[1];
+}
+async function push() {
+  if (pushing) { again = true; return; }
+  pushing = true; setPub("saving");
+  try {
+    const r = await fetch(API, { method: "POST", headers: { "content-type": "application/json", "x-admin-key": KEY }, body: JSON.stringify({ base: BASE, products: clean() }) });
+    const d = await r.json().catch(() => ({}));
+    if (r.status === 409) { setPub("conflict"); toast("Otro dispositivo editó el catálogo. Recarga la página.", true); again = false; }
+    else if (r.status === 401) { toast("Sesión inválida. Entra de nuevo.", true); showLock(); }
+    else if (!r.ok) throw new Error(d.error || "Error " + r.status);
+    else { BASE = d.updated; setPub("ok"); }
+  } catch (e) { setPub("error", (e && e.message) || ""); clearTimeout(saveT); saveT = setTimeout(() => { saveT = 0; push(); }, 4000); }
+  finally { pushing = false; if (again) { again = false; push(); } }
+}
+function save(quiet) { clearTimeout(saveT); saveT = 0; push(); if (!quiet) toast("Publicando cambios…"); }
+const saveSoon = () => { clearTimeout(saveT); saveT = setTimeout(() => { saveT = 0; push(); }, 700); setPub("saving"); };
+
+/* ---------- pantalla ---------- */
+function updateStatus() {
+  const on = products.filter(p => p.disponible).length;
+  $("#sTotal").textContent = products.length; $("#sOn").textContent = on; $("#sOff").textContent = products.length - on;
+}
+function card(p, i) {
+  const n = products.length;
+  return `<article class="pc${p.disponible ? "" : " off"}" data-id="${esc(p.id)}">
+  <div class="photo">
+    <label class="ph" title="Cambiar foto">${p.imagen ? `<img src="${esc(p.imagen)}" alt="Foto de ${esc(p.nombre)}">` : `<span>＋ Subir foto</span>`}<input type="file" accept="image/*" data-photo aria-label="Subir foto de ${esc(p.nombre) || "paquete"}"></label>
+    ${p.imagen ? `<button class="btn btn-sm btn-danger" type="button" data-act="nophoto">Quitar foto</button>` : ""}
+  </div>
+  <div class="fields">
+    <label class="f">Nombre<input data-k="nombre" value="${esc(p.nombre)}" placeholder="Ej. 4 JUEGOS (DE TODO STEAM)" maxlength="80"></label>
+    <div class="row">
+      <label class="f">Juegos incluidos<input data-k="juegos" type="number" min="0" step="1" inputmode="numeric" value="${p.juegos}"></label>
+      <label class="f">Precio (MXN, 0 = no mostrar)<input data-k="precio" type="number" min="0" step="1" inputmode="decimal" value="${p.precio}"></label>
+    </div>
+    <label class="f">Descripción corta<input data-k="nota" value="${esc(p.nota)}" placeholder="${esc(NOTA)}" maxlength="120"></label>
+    <div class="pc-foot">
+      <label class="sw"><input type="checkbox" data-k="disponible" ${p.disponible ? "checked" : ""}><i></i><span data-lbl>${p.disponible ? "Disponible" : "Agotado"}</span></label>
+      <span class="spacer"></span>
+      <button class="btn icon" type="button" data-act="up" aria-label="Subir" ${i === 0 ? "disabled" : ""}>↑</button>
+      <button class="btn icon" type="button" data-act="down" aria-label="Bajar" ${i === n - 1 ? "disabled" : ""}>↓</button>
+      <button class="btn icon" type="button" data-act="dup" aria-label="Duplicar" title="Duplicar">⧉</button>
+      <button class="btn icon btn-danger" type="button" data-act="del" aria-label="Eliminar" title="Eliminar">✕</button>
+    </div>
+  </div>
+</article>`;
+}
+function render() {
+  $("#list").innerHTML = products.length ? products.map(card).join("") : `<div class="empty">Aún no hay paquetes.<br>Pulsa “+ Agregar paquete” para crear el primero.</div>`;
+  updateStatus();
+}
+
+/* ---------- edición ---------- */
+const byId = id => products.find(p => p.id === id);
+$("#list").addEventListener("input", e => {
+  const k = e.target.dataset.k; if (!k) return;
+  const c = e.target.closest(".pc"), p = byId(c.dataset.id); if (!p) return;
+  if (k === "disponible") { p.disponible = e.target.checked; c.classList.toggle("off", !p.disponible); $("[data-lbl]", c).textContent = p.disponible ? "Disponible" : "Agotado"; updateStatus(); save(true); toast(p.disponible ? "Marcado como disponible" : "Marcado como agotado"); return; }
+  p[k] = (k === "precio" || k === "juegos") ? Math.max(0, Number(e.target.value) || 0) : e.target.value;
+  saveSoon();
+});
+$("#list").addEventListener("change", async e => {
+  if (!e.target.matches("[data-photo]")) return;
+  const f = e.target.files && e.target.files[0]; if (!f) return;
+  const p = byId(e.target.closest(".pc").dataset.id);
+  try { p.imagen = await fitImage(f); save(true); render(); toast("Foto actualizada"); }
+  catch (_) { toast("No se pudo leer esa imagen.", true); }
+});
+$("#list").addEventListener("click", e => {
+  const b = e.target.closest("button[data-act]"); if (!b) return;
+  const id = b.closest(".pc").dataset.id, i = products.findIndex(p => p.id === id), p = products[i], a = b.dataset.act;
+  if (a === "up" && i > 0) [products[i - 1], products[i]] = [products[i], products[i - 1]];
+  if (a === "down" && i < products.length - 1) [products[i + 1], products[i]] = [products[i], products[i + 1]];
+  if (a === "dup") products.splice(i + 1, 0, { ...norm(p), id: uid(p.nombre), nombre: p.nombre + " (copia)" });
+  if (a === "del") { if (!confirm(`¿Eliminar “${p.nombre || "paquete sin nombre"}”? Esta acción no se puede deshacer.`)) return; products.splice(i, 1); }
+  if (a === "nophoto") p.imagen = "";
+  save(true); render();
+  if (a === "del") toast("Paquete eliminado");
+});
+$("#btnAdd").addEventListener("click", () => {
+  products.unshift(norm({ id: uid("nuevo"), nombre: "", juegos: 1, nota: NOTA, precio: 0, imagen: "", disponible: true }));
+  save(true); render(); const first = $("#list .pc [data-k=nombre]"); if (first) { first.focus(); first.scrollIntoView({ block: "center", behavior: "smooth" }); }
+  toast("Paquete nuevo: escribe el nombre y los juegos incluidos");
+});
+
+/* ---------- fotos: recorte 16:10 para que calce con la tienda ---------- */
+const OUT_W = 800, OUT_H = 500;
+function loadImg(src) { return new Promise((ok, bad) => { const im = new Image(); im.onload = () => ok(im); im.onerror = bad; im.src = src; }); }
+async function fitImage(file) {
+  const url = URL.createObjectURL(file);
+  try {
+    const im = await loadImg(url), w = im.naturalWidth, h = im.naturalHeight, ratio = OUT_W / OUT_H;
+    let sw = w, sh = w / ratio; if (sh > h) { sh = h; sw = h * ratio; }
+    const sx = (w - sw) / 2, sy = (h - sh) / 2, k = Math.min(1, OUT_W / sw);
+    const c = document.createElement("canvas"); c.width = Math.max(1, Math.round(sw * k)); c.height = Math.max(1, Math.round(sh * k));
+    c.getContext("2d").drawImage(im, sx, sy, sw, sh, 0, 0, c.width, c.height);
+    let out = c.toDataURL("image/webp", .82);
+    if (!out.startsWith("data:image/webp")) out = c.toDataURL("image/jpeg", .85);
+    return out;
+  } finally { URL.revokeObjectURL(url); }
+}
+
+/* ---------- respaldo / importar / restaurar ---------- */
+$("#btnExport").addEventListener("click", () => {
+  const blob = new Blob([JSON.stringify({ version: 1, updated: new Date().toISOString(), products: clean() }, null, 1)], { type: "application/json" });
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "catalogo-zoriwi.json"; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  toast("Respaldo descargado");
+});
+$("#btnPreview").addEventListener("click", () => window.open("/", "_blank"));
+$("#btnImport").addEventListener("click", () => $("#fileImport").click());
+$("#fileImport").addEventListener("change", async e => {
+  const f = e.target.files[0]; e.target.value = ""; if (!f) return;
+  try {
+    const d = JSON.parse(await f.text()), arr = Array.isArray(d) ? d : d.products;
+    if (!Array.isArray(arr) || !arr.every(p => p && p.nombre !== undefined)) throw 0;
+    if (!confirm(`Se reemplazará tu catálogo actual por los ${arr.length} paquetes del archivo. ¿Continuar?`)) return;
+    products = arr.map(norm); save(true); render(); toast("Catálogo importado");
+  } catch (_) { toast("Ese archivo no es un respaldo válido.", true); }
+});
+$("#btnReset").addEventListener("click", () => {
+  if (!confirm("Se reemplazará todo por los 4 paquetes originales (1, 4, 7 y 14 juegos). ¿Continuar?")) return;
+  products = DEFAULTS.map(norm); save(true); render(); toast("Paquetes originales restaurados");
+});
+window.addEventListener("beforeunload", e => { if (saveT || pushing) { e.preventDefault(); e.returnValue = ""; } });
+
+/* ---------- inicio ---------- */
+const saved = ss.get(SK);
+showLock();
+if (saved) tryLogin(saved, true);
+</script>
+</body>
+</html>
