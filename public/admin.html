@@ -156,7 +156,7 @@ const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": 
 const ss = { get: k => { try { return sessionStorage.getItem(k); } catch (_) { return null; } }, set: (k, v) => { try { sessionStorage.setItem(k, v); } catch (_) {} }, del: k => { try { sessionStorage.removeItem(k); } catch (_) {} } };
 
 /* ---------- acceso ---------- */
-let KEY = "", BASE = "0", products = [];
+let KEY = "22060667", BASE = "0", products = [];
 const lock = $("#lock"), panelEl = $("#panel");
 let fails = 0, blockedUntil = 0;
 function showLock() { KEY = ""; ss.del(SK); panelEl.classList.add("hidden"); lock.classList.remove("hidden"); $("#pin").value = ""; $("#lockErr").textContent = ""; setTimeout(() => { try { $("#pin").focus(); } catch (_) {} }, 30); }
