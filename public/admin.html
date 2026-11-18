@@ -10,13 +10,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0f17;--panel:#131c2a;--panel2:#1a2739;--edge:rgba(102,192,244,.16);--edge2:rgba(102,192,244,.32);--sky:#66c0f4;--violet:#8b5cf6;--steel:#c7d5e0;--mute:#8ba3ba;--ok:#5ec26a;--warn:#f2b84b;--bad:#ff8b92;
+:root{--bg:#0a0f17;--panel:#131c2a;--panel2:#1a2739;--edge:rgba(102,192,244,.16);--edge2:rgba(102,192,244,.32);--sky:#66c0f4;--violet:#8b5cf6;--steel:#c7d5e0;--mute:#8ba3ba;--ok:#5ec26a;--warn:#f2b84b;--bad:#ff8b92;--hot:#e8192c;--hot2:#ff6a1a;--gold:#ffd23f;
 --grad:linear-gradient(100deg,#06bfff,#2d73ff 55%,#8b5cf6);--ease:cubic-bezier(.2,.8,.2,1);--spring:cubic-bezier(.34,1.56,.64,1);
 --disp:'Bebas Neue','Arial Narrow',Impact,sans-serif;--body:'Outfit',system-ui,'Segoe UI',sans-serif;color-scheme:dark}
 *{box-sizing:border-box;margin:0}
 body{background:var(--bg);color:var(--steel);font:400 .95rem/1.5 var(--body);min-height:100vh;padding-bottom:90px;overflow-x:hidden}
-h1,h2{font-family:var(--disp);font-weight:400;color:#fff;line-height:1}
-button,input{font:inherit;color:inherit}button{cursor:pointer}
+h1,h2,h3{font-family:var(--disp);font-weight:400;color:#fff;line-height:1}
+button,input,textarea{font:inherit;color:inherit}button{cursor:pointer}
 :focus-visible{outline:2px solid var(--sky);outline-offset:2px}
 .hidden{display:none!important}
 ::selection{background:#1a9fff;color:#fff}
@@ -62,8 +62,6 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}
 .lock-box.shake .emblem img{animation:no .5s ease}
 @keyframes bob{50%{transform:translateY(-4px) rotate(-3deg)}}
 @keyframes no{25%{transform:rotate(-14deg)}75%{transform:rotate(14deg)}}
-.mascot{height:48px;width:auto;filter:drop-shadow(0 4px 10px rgba(0,0,0,.45));transform-origin:50% 90%;transition:transform .5s var(--spring)}
-.brand:hover .mascot{transform:rotate(-10deg) scale(1.08)}
 .lock-box h1{font-size:2.7rem;letter-spacing:.02em}
 .lock-box p{color:var(--mute);font-size:.86rem}
 .pin-wrap{position:relative}
@@ -84,8 +82,8 @@ header.busy::after{opacity:1;animation:bar 1.1s linear infinite}
 @keyframes bar{from{background-position:-50% 0}to{background-position:150% 0}}
 .bar{max-width:1160px;margin:auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:12px;font:400 1.75rem var(--disp);color:#fff;letter-spacing:.02em}
-.brand .mk{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--grad)}
-.brand svg{width:24px;height:24px}
+.mascot{height:48px;width:auto;filter:drop-shadow(0 4px 10px rgba(0,0,0,.45));transform-origin:50% 90%;transition:transform .5s var(--spring)}
+.brand:hover .mascot{transform:rotate(-10deg) scale(1.08)}
 .brand small{display:block;font:500 .72rem var(--body);color:var(--mute);margin-top:-2px;letter-spacing:0}
 .spacer{flex:1}
 .actions{display:flex;gap:8px;flex-wrap:wrap}
@@ -93,7 +91,7 @@ main{max-width:1160px;margin:auto;padding:26px 20px}
 .hello{margin-bottom:20px}
 .hello h2{font-size:clamp(2.2rem,5vw,3rem);letter-spacing:.01em}
 .hello p{color:var(--mute)}
-.status{display:grid;grid-template-columns:repeat(3,minmax(120px,1fr)) minmax(280px,2fr);gap:12px;margin-bottom:28px}
+.status{display:grid;grid-template-columns:repeat(3,minmax(120px,1fr)) minmax(280px,2fr);gap:12px;margin-bottom:24px}
 .stat,.pub{position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(26,39,57,.85),rgba(19,28,42,.85));border:1px solid var(--edge);border-radius:16px;padding:14px 18px;animation:rise .7s var(--ease) both;animation-delay:calc(var(--i) * 80ms + 150ms)}
 @keyframes rise{from{opacity:0;transform:translateY(16px)}}
 .stat::after{content:"";position:absolute;right:-20px;top:-20px;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,var(--c,rgba(102,192,244,.25)),transparent 70%)}
@@ -112,9 +110,22 @@ main{max-width:1160px;margin:auto;padding:26px 20px}
 .pub.error .dot{background:var(--bad)}
 .pub p{font-size:.84rem;color:var(--mute)}
 .pub strong{display:block;color:#fff;font-size:.95rem}
+
+/* pestañas */
+.tabs{position:relative;display:flex;gap:4px;padding:5px;border-radius:14px;background:rgba(19,28,42,.85);border:1px solid var(--edge);margin-bottom:22px;width:max-content;max-width:100%;overflow-x:auto}
+.tabs button{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;border:0;background:none;padding:10px 18px;border-radius:10px;font-weight:600;color:var(--mute);transition:color .25s;white-space:nowrap}
+.tabs button svg{width:18px;height:18px}
+.tabs button[aria-selected=true]{color:#fff}
+.tabs .ind{position:absolute;z-index:0;top:5px;bottom:5px;left:0;border-radius:10px;background:var(--grad);box-shadow:0 6px 20px -6px rgba(45,115,255,.8);transition:transform .45s var(--spring),width .45s var(--spring),background .3s}
+.tabs.hotsel .ind{background:linear-gradient(100deg,var(--hot),var(--hot2));box-shadow:0 6px 20px -6px rgba(232,25,44,.8)}
+.livebadge{font-size:.62rem;font-weight:700;letter-spacing:.06em;background:var(--hot);color:#fff;padding:1px 6px;border-radius:5px;animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.55}}
+.tabs button[aria-selected=true] .livebadge{background:#fff;color:var(--hot)}
+.pane{animation:rise .5s var(--ease) both}
 .tools{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:6px 0 18px}
 .tools h2{font-size:2.3rem}
 
+/* paquetes */
 #list{display:grid;grid-template-columns:repeat(auto-fill,minmax(500px,1fr));gap:18px}
 .pc{position:relative;background:linear-gradient(180deg,rgba(26,39,57,.92),rgba(19,28,42,.92));border:1px solid var(--edge);border-radius:18px;padding:16px;display:grid;grid-template-columns:190px 1fr;gap:18px;transition:border-color .3s,box-shadow .4s}
 .pc:hover{border-color:var(--edge2);box-shadow:0 24px 50px -24px rgba(26,159,255,.35)}
@@ -136,22 +147,76 @@ main{max-width:1160px;margin:auto;padding:26px 20px}
 .fields{display:grid;gap:11px;align-content:start;min-width:0}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 label.f{display:grid;gap:5px;font-size:.74rem;color:var(--mute);font-weight:600;letter-spacing:.02em}
-label.f input{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--edge);background:rgba(10,15,23,.7);font-size:.92rem;font-weight:500;color:#fff;transition:border-color .2s,box-shadow .25s}
-label.f input:focus{border-color:var(--sky);outline:none;box-shadow:0 0 0 3px rgba(102,192,244,.16)}
+label.f input,label.f textarea{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--edge);background:rgba(10,15,23,.7);font-size:.92rem;font-weight:500;color:#fff;transition:border-color .2s,box-shadow .25s}
+label.f textarea{resize:vertical;min-height:64px;line-height:1.4}
+label.f input:focus,label.f textarea:focus{border-color:var(--sky);outline:none;box-shadow:0 0 0 3px rgba(102,192,244,.16)}
+label.f small{font-weight:500;color:var(--mute);opacity:.8}
 .per{font-size:.72rem;color:var(--sky);font-weight:500;min-height:1em;margin-top:-4px}
+.per .h{color:#ffb199}
 .pc-foot{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px}
 .sw{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:.88rem;cursor:pointer;user-select:none}
 .sw input{position:absolute;opacity:0}
 .sw i{width:48px;height:28px;border-radius:999px;background:#3a4a5c;position:relative;transition:background .3s;flex:none}
 .sw i::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.35);transition:transform .4s var(--spring)}
 .sw input:checked+i{background:var(--ok)}
+.sw.hot input:checked+i{background:linear-gradient(90deg,var(--hot),var(--hot2))}
 .sw input:checked+i::after{transform:translateX(20px)}
 .sw input:focus-visible+i{outline:2px solid var(--sky);outline-offset:2px}
 .sw span{transition:color .3s}
-.pc.off .sw span{color:var(--bad)}
+.pc.off .sw span[data-lbl]{color:var(--bad)}
 .icon{width:36px;height:36px;padding:0;border-radius:10px}
 .empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--mute);border:1.5px dashed var(--edge2);border-radius:18px;animation:rise .6s var(--ease) both}
 .empty svg{width:56px;height:56px;color:var(--edge2);margin-bottom:10px}
+
+/* tarjetas de ajustes */
+.box{background:linear-gradient(180deg,rgba(26,39,57,.9),rgba(19,28,42,.9));border:1px solid var(--edge);border-radius:18px;padding:20px;display:grid;gap:14px;align-content:start}
+.box h3{font-size:1.7rem;letter-spacing:.02em;display:flex;align-items:center;gap:10px}
+.box h3 small{font:500 .78rem var(--body);color:var(--mute);letter-spacing:0}
+.box p.help{color:var(--mute);font-size:.84rem;margin-top:-6px}
+.cols{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+
+/* hot sale */
+.hotgrid{display:grid;grid-template-columns:1.1fr 1fr;gap:16px}
+.hotbox{border-color:rgba(232,25,44,.35);background:radial-gradient(circle at 100% 0,rgba(232,25,44,.18),transparent 50%),linear-gradient(180deg,rgba(26,39,57,.9),rgba(19,28,42,.9))}
+.bigsw{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;border-radius:14px;background:rgba(10,15,23,.55);border:1px solid var(--edge)}
+.bigsw strong{display:block;color:#fff;font-size:1rem}
+.bigsw span{font-size:.8rem;color:var(--mute)}
+.state{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;padding:4px 10px;border-radius:99px;background:rgba(255,255,255,.06);color:var(--mute)}
+.state.on{background:rgba(232,25,44,.2);color:#ff9a8a}
+.state.on::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--hot);animation:pulse 1.2s infinite}
+.pct{display:flex;align-items:center;gap:14px}
+.pct input[type=range]{flex:1;accent-color:var(--hot)}
+.pct output{font:400 2.4rem/1 var(--disp);color:#fff;min-width:80px;text-align:right}
+.quick{display:flex;gap:6px;flex-wrap:wrap}
+.quick .btn{padding:6px 11px;font-size:.78rem}
+/* vista previa de la franja */
+.prev{border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
+.prev .lbl{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);padding:8px 12px;background:rgba(10,15,23,.6)}
+.strip{position:relative;overflow:hidden;color:#fff;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 14px;padding:12px;text-align:center;background:linear-gradient(90deg,#b0101f,var(--hot) 30%,#ff3b2f 50%,var(--hot) 70%,#b0101f);background-size:200% 100%;animation:hotbg 6s linear infinite}
+.strip::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(-45deg,rgba(255,255,255,.06) 0 12px,transparent 12px 24px);pointer-events:none}
+.strip.off{filter:grayscale(1) brightness(.6)}
+@keyframes hotbg{to{background-position:-200% 0}}
+.strip .t{font:400 1.5rem/1 var(--disp);letter-spacing:.06em;display:flex;align-items:center;gap:6px;position:relative}
+.strip .t svg{width:20px;height:24px;animation:flick .9s ease-in-out infinite alternate;transform-origin:50% 100%}
+@keyframes flick{50%{transform:scale(.94,1.08) rotate(2deg)}}
+.strip .p{font:400 1.3rem/1 var(--disp);background:var(--gold);color:#5a0008;padding:3px 8px 1px;border-radius:7px;transform:rotate(-4deg);position:relative}
+.strip .x{font-weight:600;font-size:.86rem;position:relative;flex-basis:100%}
+.strip .c{font:400 1.3rem/1 var(--disp);letter-spacing:.06em;background:rgba(0,0,0,.25);padding:4px 10px 2px;border-radius:8px;position:relative;font-variant-numeric:tabular-nums}
+.plist{display:grid;gap:8px;max-height:460px;overflow:auto;padding-right:4px}
+.pi{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;padding:8px 10px;border-radius:12px;background:rgba(10,15,23,.5);border:1px solid var(--edge);transition:border-color .3s,opacity .3s}
+.pi.no{opacity:.55}
+.pi .th{width:52px;aspect-ratio:16/10;border-radius:7px;background:#0d131c center/cover;border:1px solid var(--edge)}
+.pi b{color:#fff;font-size:.88rem;display:block;line-height:1.25}
+.pi small{color:var(--mute);font-size:.76rem}
+.pi small s{opacity:.7}
+.pi small em{font-style:normal;color:#ffb199;font-weight:600}
+
+/* textos */
+.tx-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:16px}
+.search{position:relative;flex:1;max-width:360px}
+.search input{width:100%;padding:10px 12px 10px 36px;border-radius:11px;border:1px solid var(--edge2);background:rgba(10,15,23,.7)}
+.search svg{position:absolute;left:11px;top:50%;translate:0 -50%;width:17px;height:17px;color:var(--mute)}
+.chg{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--sky);margin-left:6px;vertical-align:middle}
 
 #toast{position:fixed;left:50%;bottom:24px;display:flex;align-items:center;gap:10px;transform:translate(-50%,40px) scale(.95);opacity:0;background:rgba(255,255,255,.96);color:#0b1220;padding:11px 18px 11px 14px;border-radius:14px;font-weight:600;font-size:.86rem;transition:transform .45s var(--spring),opacity .3s;z-index:60;pointer-events:none;max-width:90vw;box-shadow:0 20px 50px -10px rgba(0,0,0,.6)}
 #toast::before{content:"✓";display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ok);color:#fff;font-size:.8rem;flex:none}
@@ -167,10 +232,9 @@ details ol{list-style:none;counter-reset:n;margin:0 0 18px;padding:0;color:var(-
 details li{counter-increment:n;display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
 details li::before{content:counter(n);width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:var(--grad);color:#fff;font-weight:700;font-size:.8rem}
 details[open] li{animation:rise .5s var(--ease) both}
-details[open] li:nth-child(2){animation-delay:.05s}details[open] li:nth-child(3){animation-delay:.1s}details[open] li:nth-child(4){animation-delay:.15s}details[open] li:nth-child(5){animation-delay:.2s}
 details b{color:var(--steel)}
-@media(max-width:900px){.status{grid-template-columns:repeat(3,1fr)}.pub{grid-column:1/-1}}
-@media(max-width:560px){#list{grid-template-columns:1fr}.pc{grid-template-columns:1fr}.actions .btn{flex:1}.photo{padding-top:24px}.stat b{font-size:2rem}}
+@media(max-width:900px){.status{grid-template-columns:repeat(3,1fr)}.pub{grid-column:1/-1}.hotgrid{grid-template-columns:1fr}}
+@media(max-width:560px){#list{grid-template-columns:1fr}.pc{grid-template-columns:1fr}.actions .btn{flex:1}.photo{padding-top:24px}.stat b{font-size:2rem}.cols{grid-template-columns:1fr}.tabs button{padding:9px 12px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -217,26 +281,76 @@ details b{color:var(--steel)}
     <div class="pub" id="pub" style="--i:3"><span class="dot"></span><p><strong id="pubT">Todo publicado</strong><span id="pubS">Tus clientes ven este catálogo en vivo.</span></p></div>
   </section>
 
-  <div class="tools">
-    <h2>Paquetes y juegos</h2>
-    <div class="actions">
-      <button class="btn" id="btnImport" type="button">Importar respaldo</button>
-      <button class="btn" id="btnReset" type="button">Restaurar originales</button>
-      <button class="btn btn-primary" id="btnAdd" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Agregar paquete</button>
-      <input type="file" id="fileImport" accept="application/json,.json" class="hidden">
-    </div>
+  <div class="tabs" role="tablist" id="tabs">
+    <span class="ind" id="ind"></span>
+    <button role="tab" aria-selected="true" data-tab="paq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>Paquetes</button>
+    <button role="tab" aria-selected="false" data-tab="hot"><svg viewBox="0 0 24 28" aria-hidden="true"><path d="M12 1c1 5 6 7 6 14a6 6 0 0 1-12 0c0-3 1.5-5 3-6.5 0 2 1 3.5 2.5 4C11 9 10 5 12 1Z" fill="currentColor"/></svg>Hot Sale <span class="livebadge hidden" id="liveB">EN VIVO</span></button>
+    <button role="tab" aria-selected="false" data-tab="txt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V5h16v2M9 19h6M12 5v14"/></svg>Textos de la tienda</button>
   </div>
 
-  <div id="list"></div>
+  <!-- PAQUETES -->
+  <section class="pane" data-pane="paq">
+    <div class="tools">
+      <h2>Paquetes y juegos</h2>
+      <div class="actions">
+        <button class="btn" id="btnImport" type="button">Importar respaldo</button>
+        <button class="btn" id="btnReset" type="button">Restaurar originales</button>
+        <button class="btn btn-primary" id="btnAdd" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Agregar paquete</button>
+        <input type="file" id="fileImport" accept="application/json,.json" class="hidden">
+      </div>
+    </div>
+    <div id="list"></div>
+  </section>
+
+  <!-- HOT SALE -->
+  <section class="pane hidden" data-pane="hot">
+    <div class="hotgrid">
+      <div class="box hotbox">
+        <h3>🔥 Hot Sale <span class="state" id="hState">Apagado</span></h3>
+        <div class="bigsw">
+          <div><strong>Activar promoción</strong><span>Muestra la franja roja con contador y aplica el descuento.</span></div>
+          <label class="sw hot"><input type="checkbox" id="hOn" aria-label="Activar Hot Sale"><i></i></label>
+        </div>
+        <label class="f">Título de la franja<input id="hTitulo" maxlength="40" placeholder="HOT SALE"></label>
+        <label class="f">Texto de la franja <small>· escribe {descuento} para mostrar el porcentaje</small><input id="hTexto" maxlength="160"></label>
+        <label class="f">Descuento en toda la tienda
+          <div class="pct"><input type="range" id="hRange" min="1" max="90" step="1"><input type="number" id="hPct" min="1" max="90" step="1" inputmode="numeric" style="width:84px"><output id="hOut">10%</output></div>
+        </label>
+        <label class="f">Termina el día y hora<input type="datetime-local" id="hFin"></label>
+        <div class="quick" id="quick">
+          <button class="btn" type="button" data-add-h="12">+12 horas</button>
+          <button class="btn" type="button" data-add-h="24">+1 día</button>
+          <button class="btn" type="button" data-add-h="72">+3 días</button>
+          <button class="btn" type="button" data-add-h="168">+1 semana</button>
+        </div>
+        <div class="prev"><div class="lbl">Vista previa de la franja</div><div class="strip" id="strip"></div></div>
+      </div>
+      <div class="box">
+        <h3>Productos en promoción <small id="hCount"></small></h3>
+        <p class="help">Apaga los paquetes que <b>no</b> quieres que tengan descuento. Los paquetes sin precio no se ven afectados.</p>
+        <div class="quick"><button class="btn" type="button" id="hAll">Todos con promoción</button><button class="btn" type="button" id="hNone">Ninguno</button></div>
+        <div class="plist" id="plist"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEXTOS -->
+  <section class="pane hidden" data-pane="txt">
+    <div class="tx-tools">
+      <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="txSearch" placeholder="Buscar un texto…" aria-label="Buscar un texto"></label>
+      <button class="btn" type="button" id="txReset">Restaurar textos originales</button>
+    </div>
+    <div class="cols" id="txCols"></div>
+  </section>
 
   <details>
     <summary>¿Cómo funciona?</summary>
     <ol>
-      <li><span>Edita nombre, cantidad de juegos, precio, foto o disponibilidad: los cambios se <b>publican solos</b> en un par de segundos.</span></li>
+      <li><span>Edita paquetes, textos o el Hot Sale: los cambios se <b>publican solos</b> en un par de segundos.</span></li>
       <li><span>La tienda se actualiza <b>sin recargar</b> (cada ~15 segundos) en todos los teléfonos y computadoras.</span></li>
-      <li><span>Para cambiar una foto, toca la imagen del paquete o <b>arrastra una foto encima</b>. Se ajusta sola al formato de la tienda.</span></li>
-      <li><span>Revisa arriba que diga <b>“Todo publicado”</b>. Si falla el internet, reintenta solo.</span></li>
-      <li><span>El precio en <b>0</b> no se muestra en la tienda. “Agotado” deja el paquete visible pero sin botón de compra.</span></li>
+      <li><span>Para cambiar una foto, toca la imagen del paquete o <b>arrastra una foto encima</b>.</span></li>
+      <li><span>El <b>Hot Sale</b> se apaga solo cuando el contador llega a cero y los precios regresan a la normalidad.</span></li>
+      <li><span>Si dejas un texto <b>vacío</b>, ese texto se oculta en la tienda.</span></li>
     </ol>
   </details>
 </main>
@@ -247,24 +361,38 @@ details b{color:var(--steel)}
 <script>
 const API = "/api/products", SK = "zw_admin_key";
 const NOTA = "Tú eliges cualquier juego del catálogo de Steam.";
-const DEFAULTS = [1, 4, 7, 14].map(n => ({ id: "p" + n, nombre: `${n} JUEGO${n > 1 ? "S" : ""} (DE TODO STEAM)`, juegos: n, nota: NOTA, precio: 0, imagen: "", disponible: true }));
+const DEFAULTS = [1, 4, 7, 14].map(n => ({ id: "p" + n, nombre: `${n} JUEGO${n > 1 ? "S" : ""} (DE TODO STEAM)`, juegos: n, nota: NOTA, precio: 0, imagen: "", disponible: true, promo: true }));
+/* textos de la tienda: mismas claves y valores por defecto que en index.html */
+const TX = {nav1:"Paquetes",nav2:"Cómo funciona",eyebrow:"Catálogo actualizado en vivo",heroTitulo:"Juega lo que todos están jugando",heroSub:"Elige tu paquete de juegos de todo Steam y haz tu pedido directo por WhatsApp. Tú decides qué jugar.",cta1:"Ver paquetes",cta2:"Cómo funciona",chip1:"Todo el catálogo de Steam",chip2:"Pedido por WhatsApp",chip3:"Tú eliges los juegos",cinta:"Todo Steam, Acción, Tú eliges, Aventura, RPG, Pedido por WhatsApp, Shooters, Indie, Estrategia, Carreras, Terror, Mundo abierto",catKicker:"Paquetes",catTitulo:"Elige tu paquete",catSub:"Mientras más juegos, más diversión. Escoge el paquete y después nos dices qué juegos quieres.",botonComprar:"Elegir paquete",agotado:"Agotado",comoKicker:"Así de fácil",comoTitulo:"Cómo funciona",paso1T:"Elige tu paquete",paso1D:"Escoge cuántos juegos quieres y agrégalo a tu carrito.",paso2T:"Envía tu pedido",paso2D:"Se abre WhatsApp con tu pedido listo para enviar.",paso3T:"Elige tus juegos",paso3D:"Dinos qué juegos quieres de todo el catálogo de Steam.",finalTitulo:"¿Listo para jugar?",finalSub:"Arma tu pedido en segundos y mándalo por WhatsApp.",finalBtn:"Elegir mi paquete",footer:"Los nombres de los juegos pertenecen a sus respectivos dueños.",carritoTitulo:"Tu carrito",carritoBoton:"Enviar pedido por WhatsApp",carritoNota:"Se abrirá WhatsApp con tu pedido listo para enviar.",mensaje:"Hola, quiero hacer este pedido de juegos de Steam en Zoriwi Shop:"};
+const GROUPS = [
+  ["Portada", "Lo primero que ven tus clientes", [["eyebrow","Etiqueta de arriba"],["heroTitulo","Título grande (la última palabra brilla)",1],["heroSub","Descripción",1],["cta1","Botón principal"],["cta2","Botón secundario"],["chip1","Beneficio 1"],["chip2","Beneficio 2"],["chip3","Beneficio 3"]]],
+  ["Menú y cinta", "Enlaces del encabezado y la cinta animada", [["nav1","Enlace 1 del menú"],["nav2","Enlace 2 del menú"],["cinta","Palabras de la cinta (separadas por comas)",1]]],
+  ["Catálogo", "Sección de paquetes", [["catKicker","Etiqueta"],["catTitulo","Título"],["catSub","Descripción",1],["botonComprar","Botón de cada paquete"],["agotado","Texto de agotado"]]],
+  ["Cómo funciona", "Los 3 pasos", [["comoKicker","Etiqueta"],["comoTitulo","Título"],["paso1T","Paso 1 · título"],["paso1D","Paso 1 · texto"],["paso2T","Paso 2 · título"],["paso2D","Paso 2 · texto"],["paso3T","Paso 3 · título"],["paso3D","Paso 3 · texto"]]],
+  ["Llamado final y pie", "Al final de la página", [["finalTitulo","Título"],["finalSub","Texto"],["finalBtn","Botón"],["footer","Pie de página",1]]],
+  ["Carrito y WhatsApp", "Lo que ve tu cliente al pedir", [["carritoTitulo","Título del carrito"],["carritoBoton","Botón de enviar"],["carritoNota","Nota debajo del botón"],["mensaje","Primer renglón del mensaje de WhatsApp",1],["@whatsapp","Número de WhatsApp (con lada, ej. 529991234567)"]]]
+];
+const HOT_DEF = { activo: false, titulo: "HOT SALE", texto: "¡{descuento}% de descuento en paquetes seleccionados!", descuento: 10, fin: 0 };
 const $ = (s, c = document) => c.querySelector(s);
 const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const EASE = "cubic-bezier(.2,.8,.2,1)";
 const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const ss = { get: k => { try { return sessionStorage.getItem(k); } catch (_) { return null; } }, set: (k, v) => { try { sessionStorage.setItem(k, v); } catch (_) {} }, del: k => { try { sessionStorage.removeItem(k); } catch (_) {} } };
-const mx = n => "$" + Number(n).toLocaleString("es-MX", { maximumFractionDigits: 2 }) + " MXN";
+const mx = n => "$" + Number(n).toLocaleString("es-MX", { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }) + " MXN";
+const r2 = n => Math.round(n * 100) / 100;
+const IMGOK = /^data:image\/(webp|png|jpeg|gif);base64,[A-Za-z0-9+/=]+$/;
 
 /* ---------- acceso ---------- */
 let KEY = "", BASE = "0", products = [], firstRender = true;
+let AJ = { textos: {}, whatsapp: "", hotsale: { ...HOT_DEF } };
 const lock = $("#lock"), panelEl = $("#panel"), lockBtn = $("#lockBtn");
 let fails = 0, blockedUntil = 0;
 function showLock() { KEY = ""; ss.del(SK); panelEl.classList.add("hidden"); lock.classList.remove("hidden", "out"); $("#pin").value = ""; $("#lockErr").textContent = ""; firstRender = true; setTimeout(() => { try { $("#pin").focus(); } catch (_) {} }, 30); }
 function openPanel() {
   lock.classList.add("out");
   setTimeout(() => lock.classList.add("hidden"), RM ? 0 : 600);
-  panelEl.classList.remove("hidden"); render();
+  panelEl.classList.remove("hidden"); render(); fillHot(); buildTexts(); moveInd();
 }
 function shake() { const b = $("#lockBox"); b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake"); }
 function busyBtn(on) { lockBtn.disabled = on; lockBtn.innerHTML = on ? '<span class="spin"></span>Verificando…' : "Entrar"; }
@@ -297,11 +425,13 @@ $("#btnOut").addEventListener("click", showLock);
 /* ---------- datos ---------- */
 const slug = t => String(t || "paquete").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 30) || "paquete";
 function uid(name) { let id; do { id = slug(name) + "-" + Math.random().toString(36).slice(2, 6); } while (products.some(p => p.id === id)); return id; }
-const norm = p => ({ id: String(p.id || uid(p.nombre)), nombre: String(p.nombre || ""), juegos: Math.max(0, Math.round(Number(p.juegos) || 0)), nota: String(p.nota || ""), precio: Math.max(0, Number(p.precio) || 0), imagen: String(p.imagen || ""), disponible: p.disponible !== false });
+const norm = p => ({ id: String(p.id || uid(p.nombre)), nombre: String(p.nombre || ""), juegos: Math.max(0, Math.round(Number(p.juegos) || 0)), nota: String(p.nota || ""), precio: Math.max(0, Number(p.precio) || 0), imagen: String(p.imagen || ""), disponible: p.disponible !== false, promo: p.promo !== false });
+const normA = a => ({ textos: a && a.textos && typeof a.textos === "object" ? { ...a.textos } : {}, whatsapp: String((a && a.whatsapp) || "").replace(/\D/g, ""), hotsale: { ...HOT_DEF, ...((a && a.hotsale) || {}) } });
 async function loadRemote() {
   const r = await fetch(API, { cache: "no-store" }); if (!r.ok) throw new Error("http " + r.status);
   const d = await r.json(); BASE = d.updated || "0";
   products = Array.isArray(d.products) ? d.products.map(norm) : DEFAULTS.map(norm);
+  AJ = normA(d.ajustes);
 }
 const clean = () => products.map(norm);
 let toastT = 0;
@@ -320,7 +450,7 @@ async function push() {
   if (pushing) { again = true; return; }
   pushing = true; setPub("saving");
   try {
-    const r = await fetch(API, { method: "POST", headers: { "content-type": "application/json", "x-admin-key": KEY }, body: JSON.stringify({ base: BASE, products: clean() }) });
+    const r = await fetch(API, { method: "POST", headers: { "content-type": "application/json", "x-admin-key": KEY }, body: JSON.stringify({ base: BASE, products: clean(), ajustes: AJ }) });
     const d = await r.json().catch(() => ({}));
     if (r.status === 409) { setPub("conflict"); toast("Otro dispositivo editó el catálogo. Recarga la página.", true); again = false; }
     else if (r.status === 401) { toast("Sesión inválida. Entra de nuevo.", true); showLock(); }
@@ -332,7 +462,20 @@ async function push() {
 function save(quiet) { clearTimeout(saveT); saveT = 0; push(); if (!quiet) toast("Publicando cambios…"); }
 const saveSoon = () => { clearTimeout(saveT); saveT = setTimeout(() => { saveT = 0; push(); }, 700); setPub("saving"); };
 
-/* ---------- pantalla ---------- */
+/* ---------- pestañas ---------- */
+let TAB = "paq";
+function moveInd() { const b = $(`#tabs [data-tab="${TAB}"]`), ind = $("#ind"); if (!b) return; ind.style.width = b.offsetWidth + "px"; ind.style.transform = `translateX(${b.offsetLeft}px)`; $("#tabs").classList.toggle("hotsel", TAB === "hot"); }
+$("#tabs").addEventListener("click", e => {
+  const b = e.target.closest("[data-tab]"); if (!b || b.dataset.tab === TAB) return;
+  TAB = b.dataset.tab;
+  $$("#tabs [data-tab]").forEach(x => x.setAttribute("aria-selected", x === b));
+  $$("[data-pane]").forEach(p => p.classList.toggle("hidden", p.dataset.pane !== TAB));
+  if (TAB === "hot") { fillHot(); drawPlist(); }
+  moveInd();
+});
+addEventListener("resize", moveInd);
+
+/* ---------- pantalla paquetes ---------- */
 const last = {};
 function setStat(id, v) { const el = $("#" + id); if (last[id] === v) return; const from = last[id] ?? 0; last[id] = v; const st = el.parentElement; if (RM || from === v) { el.textContent = v; return; }
   const t0 = performance.now(), D = 600; const f = t => { const k = Math.min(1, (t - t0) / D); el.textContent = Math.round(from + (v - from) * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(f); }; requestAnimationFrame(f);
@@ -341,7 +484,13 @@ function updateStatus() {
   const on = products.filter(p => p.disponible).length;
   setStat("sTotal", products.length); setStat("sOn", on); setStat("sOff", products.length - on);
 }
-const perTxt = p => p.precio > 0 && p.juegos > 1 ? `≈ ${mx(Math.round(p.precio / p.juegos * 100) / 100)} por juego` : p.precio > 0 ? "" : "Sin precio: no se muestra en la tienda";
+const hotLive = () => AJ.hotsale.activo && AJ.hotsale.fin > Date.now();
+const perTxt = p => {
+  if (!(p.precio > 0)) return "Sin precio: no se muestra en la tienda";
+  const hp = hotLive() && p.promo !== false ? r2(p.precio * (1 - AJ.hotsale.descuento / 100)) : null;
+  const per = p.juegos > 1 ? `≈ ${mx(r2((hp ?? p.precio) / p.juegos))} por juego` : "";
+  return (hp != null ? `<span class="h">🔥 En Hot Sale: ${mx(hp)}</span>${per ? " · " : ""}` : "") + per;
+};
 const CAM = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4Z"/><circle cx="12" cy="13" r="3.5"/></svg>`;
 function card(p, i) {
   const n = products.length;
@@ -376,22 +525,23 @@ function render() {
   if (!RM && !firstRender) $$(".pc", list).forEach(el => before.set(el.dataset.id, el.getBoundingClientRect()));
   list.innerHTML = products.length ? products.map(card).join("") : `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><path d="M17.5 14v7M14 17.5h7"/></svg><br>Aún no hay paquetes.<br>Pulsa “Agregar paquete” para crear el primero.</div>`;
   updateStatus();
-  if (!RM) $$(".pc", list).forEach((el, i) => {
+  if (!RM && TAB === "paq") $$(".pc", list).forEach((el, i) => {
     const f = before.get(el.dataset.id);
     if (f) { const l = el.getBoundingClientRect(), dx = f.left - l.left, dy = f.top - l.top; if (dx || dy) el.animate([{ transform: `translate(${dx}px,${dy}px)` }, { transform: "none" }], { duration: 520, easing: EASE }); }
     else el.animate([{ opacity: 0, transform: "translateY(22px) scale(.96)" }, { opacity: 1, transform: "none" }], { duration: 600, easing: EASE, delay: firstRender ? 250 + i * 70 : 0, fill: "backwards" });
   });
   firstRender = false;
+  if (TAB === "hot") drawPlist();
 }
 
-/* ---------- edición ---------- */
+/* ---------- edición de paquetes ---------- */
 const byId = id => products.find(p => p.id === id);
 $("#list").addEventListener("input", e => {
   const k = e.target.dataset.k; if (!k) return;
   const c = e.target.closest(".pc"), p = byId(c.dataset.id); if (!p) return;
   if (k === "disponible") { p.disponible = e.target.checked; c.classList.toggle("off", !p.disponible); $("[data-lbl]", c).textContent = p.disponible ? "Disponible" : "Agotado"; updateStatus(); save(true); toast(p.disponible ? "Marcado como disponible" : "Marcado como agotado"); return; }
   p[k] = (k === "precio" || k === "juegos") ? Math.max(0, Number(e.target.value) || 0) : e.target.value;
-  if (k === "precio" || k === "juegos") $("[data-per]", c).textContent = perTxt(p);
+  if (k === "precio" || k === "juegos") $("[data-per]", c).innerHTML = perTxt(p);
   saveSoon();
 });
 $("#list").addEventListener("change", async e => {
@@ -401,7 +551,6 @@ $("#list").addEventListener("change", async e => {
   try { p.imagen = await fitImage(f); save(true); render(); toast("Foto actualizada"); }
   catch (_) { toast("No se pudo leer esa imagen.", true); }
 });
-/* resaltar la foto al arrastrar un archivo encima */
 ["dragenter", "dragover"].forEach(t => $("#list").addEventListener(t, e => { const ph = e.target.closest(".ph"); if (ph) ph.classList.add("drag"); }));
 ["dragleave", "drop"].forEach(t => $("#list").addEventListener(t, e => { const ph = e.target.closest(".ph"); if (ph && (t === "drop" || !ph.contains(e.relatedTarget))) ph.classList.remove("drag"); }));
 $("#list").addEventListener("click", async e => {
@@ -421,10 +570,87 @@ $("#list").addEventListener("click", async e => {
   if (a === "dup") toast("Paquete duplicado");
 });
 $("#btnAdd").addEventListener("click", () => {
-  products.unshift(norm({ id: uid("nuevo"), nombre: "", juegos: 1, nota: NOTA, precio: 0, imagen: "", disponible: true }));
+  products.unshift(norm({ id: uid("nuevo"), nombre: "", juegos: 1, nota: NOTA, precio: 0, imagen: "", disponible: true, promo: true }));
   save(true); render(); const first = $("#list .pc [data-k=nombre]"); if (first) { first.focus({ preventScroll: true }); first.scrollIntoView({ block: "center", behavior: RM ? "auto" : "smooth" }); }
   toast("Paquete nuevo: escribe el nombre y los juegos incluidos");
 });
+
+/* ---------- hot sale ---------- */
+const FL = `<svg viewBox="0 0 24 28" aria-hidden="true"><path d="M12 1c1 5 6 7 6 14a6 6 0 0 1-12 0c0-3 1.5-5 3-6.5 0 2 1 3.5 2.5 4C11 9 10 5 12 1Z" fill="#ffd23f"/></svg>`;
+const p2 = n => String(n).padStart(2, "0");
+const toLocal = ms => { const d = new Date(ms); return `${d.getFullYear()}-${p2(d.getMonth() + 1)}-${p2(d.getDate())}T${p2(d.getHours())}:${p2(d.getMinutes())}`; };
+function left() {
+  let s = Math.max(0, Math.floor((AJ.hotsale.fin - Date.now()) / 1000));
+  const d = Math.floor(s / 86400); s %= 86400; const h = Math.floor(s / 3600); s %= 3600;
+  return `${p2(d)}d : ${p2(h)}h : ${p2(Math.floor(s / 60))}m : ${p2(s % 60)}s`;
+}
+function fillHot() {
+  const h = AJ.hotsale;
+  $("#hOn").checked = h.activo; $("#hTitulo").value = h.titulo; $("#hTexto").value = h.texto;
+  $("#hRange").value = h.descuento; $("#hPct").value = h.descuento; $("#hOut").textContent = h.descuento + "%";
+  $("#hFin").value = h.fin ? toLocal(h.fin) : "";
+  drawStrip(); drawPlist();
+}
+function drawStrip() {
+  const h = AJ.hotsale, live = hotLive(), txt = String(h.texto || "").replaceAll("{descuento}", h.descuento).trim();
+  $("#strip").classList.toggle("off", !live);
+  $("#strip").innerHTML = `<span class="t">${FL}${esc(h.titulo || "HOT SALE")}</span><span class="p">-${h.descuento}%</span><span class="c" id="stripC">${h.fin ? left() : "Sin fecha"}</span>${txt ? `<span class="x">${esc(txt)}</span>` : ""}`;
+  const st = $("#hState");
+  st.className = "state" + (live ? " on" : "");
+  st.textContent = live ? "En vivo" : h.activo ? (h.fin ? "Terminó" : "Falta la fecha de fin") : "Apagado";
+  $("#liveB").classList.toggle("hidden", !live);
+  requestAnimationFrame(moveInd);
+}
+setInterval(() => { const c = $("#stripC"); if (c && AJ.hotsale.fin) c.textContent = left(); if (!panelEl.classList.contains("hidden")) { const live = hotLive(); if (live !== drawStrip.was) { drawStrip.was = live; drawStrip(); $$("#list .pc").forEach(c => { const p = byId(c.dataset.id); if (p) $("[data-per]", c).innerHTML = perTxt(p); }); } } }, 1000);
+function drawPlist() {
+  const on = products.filter(p => p.promo !== false).length;
+  $("#hCount").textContent = `· ${on} de ${products.length}`;
+  $("#plist").innerHTML = products.length ? products.map(p => {
+    const d = AJ.hotsale.descuento, inP = p.promo !== false;
+    const pr = p.precio > 0 ? (inP ? `<s>${mx(p.precio)}</s> → <em>${mx(r2(p.precio * (1 - d / 100)))}</em>` : mx(p.precio)) : "Sin precio";
+    return `<div class="pi${inP ? "" : " no"}" data-id="${esc(p.id)}"><span class="th" style="${IMGOK.test(p.imagen) ? `background-image:url(${p.imagen})` : ""}"></span><div><b>${esc(p.nombre) || "Paquete sin nombre"}</b><small>${pr}</small></div><label class="sw hot"><input type="checkbox" data-promo ${inP ? "checked" : ""} aria-label="Promoción para ${esc(p.nombre)}"><i></i></label></div>`;
+  }).join("") : `<p class="help">Aún no hay paquetes.</p>`;
+}
+const hset = (k, v, soon) => { AJ.hotsale[k] = v; drawStrip(); drawPlist(); $$("#list .pc").forEach(c => { const p = byId(c.dataset.id); if (p) $("[data-per]", c).innerHTML = perTxt(p); }); soon ? saveSoon() : save(true); };
+$("#hOn").addEventListener("change", e => {
+  const on = e.target.checked;
+  if (on && !(AJ.hotsale.fin > Date.now())) { AJ.hotsale.fin = Date.now() + 72 * 3600e3; $("#hFin").value = toLocal(AJ.hotsale.fin); toast("Hot Sale activado por 3 días. Puedes cambiar la fecha."); }
+  else toast(on ? "🔥 Hot Sale activado" : "Hot Sale apagado");
+  hset("activo", on);
+});
+$("#hTitulo").addEventListener("input", e => hset("titulo", e.target.value, 1));
+$("#hTexto").addEventListener("input", e => hset("texto", e.target.value, 1));
+const setPct = v => { v = Math.min(90, Math.max(1, Math.round(Number(v) || 0))); $("#hRange").value = v; $("#hOut").textContent = v + "%"; return v; };
+$("#hRange").addEventListener("input", e => { const v = setPct(e.target.value); $("#hPct").value = v; hset("descuento", v, 1); });
+$("#hPct").addEventListener("input", e => { if (e.target.value === "") return; const v = setPct(e.target.value); hset("descuento", v, 1); });
+$("#hPct").addEventListener("blur", e => { e.target.value = AJ.hotsale.descuento; });
+$("#hFin").addEventListener("change", e => { const t = e.target.value ? new Date(e.target.value).getTime() : 0; if (t && t < Date.now()) toast("Esa fecha ya pasó: el Hot Sale no se mostrará.", true); hset("fin", t || 0); });
+$("#quick").addEventListener("click", e => { const b = e.target.closest("[data-add-h]"); if (!b) return; const base = AJ.hotsale.fin > Date.now() ? AJ.hotsale.fin : Date.now(); const t = base + Number(b.dataset.addH) * 3600e3; $("#hFin").value = toLocal(t); hset("fin", t); toast("Nueva fecha de fin: " + new Date(t).toLocaleString("es-MX", { dateStyle: "medium", timeStyle: "short" })); });
+$("#plist").addEventListener("change", e => { if (!e.target.matches("[data-promo]")) return; const p = byId(e.target.closest(".pi").dataset.id); if (!p) return; p.promo = e.target.checked; drawPlist(); $$("#list .pc").forEach(c => { const q = byId(c.dataset.id); if (q) $("[data-per]", c).innerHTML = perTxt(q); }); save(true); toast(p.promo ? "Paquete con promoción" : "Paquete sin promoción"); });
+$("#hAll").addEventListener("click", () => { products.forEach(p => p.promo = true); drawPlist(); save(true); toast("Todos los paquetes con promoción"); });
+$("#hNone").addEventListener("click", () => { products.forEach(p => p.promo = false); drawPlist(); save(true); toast("Ningún paquete con promoción"); });
+
+/* ---------- textos ---------- */
+const txVal = k => k === "@whatsapp" ? AJ.whatsapp : (k in AJ.textos ? AJ.textos[k] : TX[k]);
+function buildTexts() {
+  $("#txCols").innerHTML = GROUPS.map(([g, sub, fields], gi) => `<div class="box" data-g style="animation:rise .5s ${EASE} ${gi * 60}ms both"><h3>${g} <small>${sub}</small></h3>${fields.map(([k, label, big]) => {
+    const v = txVal(k), ch = k !== "@whatsapp" && k in AJ.textos && AJ.textos[k] !== TX[k];
+    const attrs = `data-tx="${k}" placeholder="${esc(k === "@whatsapp" ? "529993954821" : TX[k] || "")}"`;
+    return `<label class="f" data-l="${esc((g + " " + label + " " + v).toLowerCase())}">${esc(label)}${ch ? '<span class="chg" title="Modificado"></span>' : ""}${big ? `<textarea ${attrs} rows="2">${esc(v)}</textarea>` : `<input ${attrs} value="${esc(v)}"${k === "@whatsapp" ? ' inputmode="tel"' : ""}>`}</label>`;
+  }).join("")}</div>`).join("");
+}
+$("#txCols").addEventListener("input", e => {
+  const k = e.target.dataset.tx; if (!k) return;
+  if (k === "@whatsapp") AJ.whatsapp = e.target.value.replace(/\D/g, "").slice(0, 15);
+  else AJ.textos[k] = e.target.value.slice(0, 400);
+  saveSoon();
+});
+$("#txSearch").addEventListener("input", e => {
+  const q = e.target.value.trim().toLowerCase();
+  $$("#txCols [data-l]").forEach(l => l.classList.toggle("hidden", !!q && !l.dataset.l.includes(q)));
+  $$("#txCols [data-g]").forEach(g => g.classList.toggle("hidden", !!q && !$$("[data-l]:not(.hidden)", g).length));
+});
+$("#txReset").addEventListener("click", () => { if (!confirm("Se regresarán todos los textos de la tienda a los originales. ¿Continuar?")) return; AJ.textos = {}; buildTexts(); save(true); toast("Textos originales restaurados"); });
 
 /* ---------- fotos: recorte 16:10 para que calce con la tienda ---------- */
 const OUT_W = 800, OUT_H = 500;
@@ -445,7 +671,7 @@ async function fitImage(file) {
 
 /* ---------- respaldo / importar / restaurar ---------- */
 $("#btnExport").addEventListener("click", () => {
-  const blob = new Blob([JSON.stringify({ version: 1, updated: new Date().toISOString(), products: clean() }, null, 1)], { type: "application/json" });
+  const blob = new Blob([JSON.stringify({ version: 2, updated: new Date().toISOString(), products: clean(), ajustes: AJ }, null, 1)], { type: "application/json" });
   const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "catalogo-zoriwi.json"; document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(a.href), 4000);
   toast("Respaldo descargado");
@@ -457,12 +683,14 @@ $("#fileImport").addEventListener("change", async e => {
   try {
     const d = JSON.parse(await f.text()), arr = Array.isArray(d) ? d : d.products;
     if (!Array.isArray(arr) || !arr.every(p => p && p.nombre !== undefined)) throw 0;
-    if (!confirm(`Se reemplazará tu catálogo actual por los ${arr.length} paquetes del archivo. ¿Continuar?`)) return;
-    products = arr.map(norm); save(true); render(); toast("Catálogo importado");
+    const conAj = !Array.isArray(d) && d.ajustes;
+    if (!confirm(`Se reemplazará tu catálogo actual por los ${arr.length} paquetes del archivo${conAj ? " (incluye textos y Hot Sale)" : ""}. ¿Continuar?`)) return;
+    products = arr.map(norm); if (conAj) AJ = normA(d.ajustes);
+    save(true); render(); fillHot(); buildTexts(); toast("Catálogo importado");
   } catch (_) { toast("Ese archivo no es un respaldo válido.", true); }
 });
 $("#btnReset").addEventListener("click", () => {
-  if (!confirm("Se reemplazará todo por los 4 paquetes originales (1, 4, 7 y 14 juegos). ¿Continuar?")) return;
+  if (!confirm("Se reemplazarán los paquetes por los 4 originales (1, 4, 7 y 14 juegos). ¿Continuar?")) return;
   products = DEFAULTS.map(norm); save(true); render(); toast("Paquetes originales restaurados");
 });
 window.addEventListener("beforeunload", e => { if (saveT || pushing) { e.preventDefault(); e.returnValue = ""; } });
