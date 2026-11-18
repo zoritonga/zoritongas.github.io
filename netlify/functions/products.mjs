@@ -21,7 +21,28 @@ const clean = p => ({
   precio: Math.max(0, Math.round((Number(p.precio) || 0) * 100) / 100),
   imagen: typeof p.imagen === "string" && p.imagen.length <= 600000 && IMG.test(p.imagen) ? p.imagen : "",
   disponible: p.disponible !== false,
+  promo: p.promo !== false, // false = este paquete no participa en el Hot Sale
 });
+
+// Textos de la tienda, número de WhatsApp y Hot Sale. Se guardan junto al catálogo.
+function cleanAjustes(a) {
+  if (!a || typeof a !== "object") return null;
+  const textos = {};
+  const src = a.textos && typeof a.textos === "object" ? a.textos : {};
+  for (const [k, v] of Object.entries(src).slice(0, 100)) if (/^[a-zA-Z0-9]{1,30}$/.test(k)) textos[k] = S(v, 400);
+  const h = a.hotsale && typeof a.hotsale === "object" ? a.hotsale : {};
+  return {
+    textos,
+    whatsapp: String(a.whatsapp ?? "").replace(/\D/g, "").slice(0, 15),
+    hotsale: {
+      activo: h.activo === true,
+      titulo: S(h.titulo, 40),
+      texto: S(h.texto, 160),
+      descuento: Math.min(90, Math.max(1, Math.round(Number(h.descuento) || 10))),
+      fin: Math.max(0, Math.min(Number(h.fin) || 0, 8.64e15)),
+    },
+  };
+}
 
 export default async (req) => {
   const store = getStore({ name: "zoriwi", consistency: "strong" });
@@ -35,7 +56,7 @@ export default async (req) => {
       return keyOk(req.headers.get("x-admin-key")) ? json({ ok: true }) : json({ error: "No autorizado" }, 401);
     }
     if (url.searchParams.has("ver")) return json({ updated });
-    return json({ updated, products: cur ? cur.products : null });
+    return json({ updated, products: cur ? cur.products : null, ajustes: cur?.ajustes || null });
   }
 
   if (req.method === "POST") {
@@ -47,7 +68,9 @@ export default async (req) => {
     if (!Array.isArray(body.products)) return json({ error: "Falta la lista de productos" }, 400);
     if (String(body.base ?? "0") !== updated) return json({ error: "Conflicto", updated }, 409);
     const next = new Date().toISOString();
-    await store.setJSON("catalog", { updated: next, products: body.products.slice(0, 200).map(clean) });
+    // Si el panel no manda ajustes (pestaña vieja), se conservan los que ya estaban guardados.
+    const ajustes = cleanAjustes(body.ajustes) || cur?.ajustes || null;
+    await store.setJSON("catalog", { updated: next, products: body.products.slice(0, 200).map(clean), ...(ajustes ? { ajustes } : {}) });
     return json({ ok: true, updated: next });
   }
 
